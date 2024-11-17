@@ -1,0 +1,62 @@
+# name: Deploy Server to Hetzner Cloud
+# on:
+#   push:
+#     branches:
+#       #- main
+#       - hz_cloud
+#   pull_request:
+#     branches:
+#       #- main
+#       - hz_cloud
+
+# jobs:
+#   terraform:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v3
+
+#     - name: Setup Terraform
+#       uses: hashicorp/setup-terraform@v2
+#       with:
+#         terraform_version: 1.5.6 # Ersetze durch deine Version
+
+#     - name: Terraform Init
+#       run: terraform init
+#       env:
+#         HCLOUD_TOKEN: ${{ secrets.HETZNER_API_TOKEN }}
+
+#     - name: Terraform Plan
+#       run: terraform plan -out=tfplan
+#       env:
+#         HCLOUD_TOKEN: ${{ secrets.HETZNER_API_TOKEN }}
+
+#     - name: Terraform Apply
+#       #if: github.ref == 'refs/heads/main' # Nur auf 'main' anwenden
+#       run: terraform apply -auto-approve tfplan
+#       env:
+#         HCLOUD_TOKEN: ${{ secrets.HETZNER_API_TOKEN }}
+
+
+
+
+
+name: Hetzner Actions Demo for Creatin a Sever
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  Testing:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."      

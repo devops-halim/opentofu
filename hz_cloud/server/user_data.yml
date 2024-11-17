@@ -1,0 +1,30 @@
+#cloud-config
+system_info:
+  default_user:
+    name: halim         # The default user created on the system.
+    primary_group: hailm  # The primary group for the user.
+    groups: users, sudo         # Additional groups the user belongs to.
+    shell: /bin/bash            # User's default shell.
+    # ssh_import_id:
+    #   - gh:yourgithubusername  # Import SSH keys from a GitHub username.
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC646O7OL61Pbeuvb/yGV9mJZt7mXcpwXQzRvAJJHkpBA8TlDNS//51XVvI1ZmCQIhleDuzKmE8N7Ywh6/fCtGNQg0bcESuLuzhChLsegcDcE1Gk7nOUP9hYAXzBhtRbYDNSJmZIr0Yp8OF+3bU1/6a+hvK28CufSXq3daD1/JQ4Hn9/xSzSdcV7BtBZ1oxXbTp34GeD0eVRQUvQqq4gvRsEOSwsaYkp4/NGFPSoD2Qlr/Ek9We78telGz0cKcsjPMHPl+KJONb4j6GMsoEf5H6lEc9CpvORL79YfQk1eEiCRFrTuPKWemgg6sBRQuMxZf1jtSo7jFyJvMeFBYynElDPSKRRp+HZNTKST0f6hRza890MlUCGRNHoJCbAPxi9ewWqSOZ0K3W/WIoeCo9bn81dvGsQ7unsxoIjxqJ+vBPp1p54CMljX37Blz+hS3ePxnOyhdayDAIZPDbnaAanHR9XriPw+tUAy2n2+fOysOOIJSEZT562qcW8PkXhS1/+OgUXpgVG4Yih01Xvj7XKMlaFxbvH/ohTUV0Pd9qMD9CV88/0GWBBqxlGssF7WGndon9iFaOCRCmaAuPvrDhtBLsD8mIHLEucxoxYAwKPK0Un3aV5TW2rbmjIgdWG/f+jGBOq5t3p5RzfeU5Frtah6V5zHeoKfncjLW6425qOdiT5Q== hetzner-test-env  # SSH public key for authentication.
+    lock_passwd: true           # Disables password-based login for the user.
+    sudo: ALL=(ALL) NOPASSWD:ALL # The user has sudo privileges without requiring a password.
+
+users:
+  - default                      # The default user is defined.
+
+disable_root: true               # Disables root login.
+ssh_pwauth: false                # Disables SSH password authentication.
+
+write_files:                      # Custom SSH configuration.
+  - path: /etc/ssh/sshd_config.d/zz-cloud-init.conf
+    content: |
+      Port 65432                 
+      AllowAgentForwarding yes
+      AllowTcpForwarding yes
+      PermitTunnel yes
+      TCPKeepAlive yes
+##### sudo apt-get install apparmor apparmor-utils
+
